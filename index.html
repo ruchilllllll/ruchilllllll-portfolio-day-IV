@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ruchil Parkar - Digital Portfolio showcasing my work, education, goals and achievements">
+    <meta name="author" content="Ruchil Parkar">
+    <meta property="og:title" content="Ruchil Parkar | Digital Portfolio">
+    <meta property="og:image" content="https://example.com/my-avatar.png">
+    <meta property="og:description" content="Personal portfolio of Ruchil Parkar - Web Developer, Game Developer and Graphic Designer">
+    <meta name="theme-color" content="#6C63FF">
+    <title>Ruchil Parkar | Digital Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="https://favicon.io/favicon-generator/?t=RP&ff=Roboto&fs=110&fc=%23FFFFFF&b=false&bc=%236C63FF">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#6C63FF',
+                            dark: '#8B85FF'
+                        },
+                        secondary: {
+                            light: '#FF6584',
+                            dark: '#FF8B9D'
+                        },
+                        accent: {
+                            light: '#00C9A7',
+                            dark: '#2CE0C1'
+                        },
+                        dark: {
+                            900: '#121212',
+                            800: '#1E1E1E',
+                            700: '#2D2D2D'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'wave': 'wave 2s linear infinite',
+                        'tilt': 'tilt 10s infinite linear'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        },
+                        gradient: {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' }
+                        },
+                        glow: {
+                            'from': { 'text-shadow': '0 0 5px rgba(108, 99, 255, 0.5)' },
+                            'to': { 'text-shadow': '0 0 15px rgba(108, 99, 255, 0.8)' }
+                        },
+                        wave: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '10%': { transform: 'rotate(14deg)' },
+                            '20%': { transform: 'rotate(-8deg)' },
+                            '30%': { transform: 'rotate(14deg)' },
+                            '40%': { transform: 'rotate(-4deg)' },
+                            '50%': { transform: 'rotate(10deg)' },
+                            '60%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(0deg)' }
+                        },
+                        tilt: {
+                            '0%, 50%, 100%': { transform: 'rotate(0deg)' },
+                            '25%': { transform: 'rotate(2deg)' },
+                            '75%': { transform: 'rotate(-2deg)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            scroll-behavior: smooth;
+        }
+        
+
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6C63FF;
+            border-radius: 10px;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #1E1E1E;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #8B85FF;
+        }
+        
+        /* Glass morphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass {
+            background: rgba(30, 30, 30, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Loading spinner */
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #6C63FF;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Scroll to top button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #6C63FF;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+        }
+        .scroll-top.active {
+            opacity: 1;
+        }
+        .scroll-top:hover {
+            background: #5A52E0;
+            transform: translateY(-3px) scale(1.05);
+        }
+        
+        /* Hamburger menu animation */
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: currentColor;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.active div:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        .hamburger.active div:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active div:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(90deg, #6C63FF, #FF6584, #00C9A7);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 5s linear infinite;
+        }
+        
+        /* Card hover effect */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .dark .card-hover:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Typewriter effect */
+        .typewriter {
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #6C63FF; }
+        }
+        
+        /* Blob shape */
+        .blob {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #6C63FF, #00C9A7);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: tilt 10s infinite linear;
+            opacity: 0.2;
+            filter: blur(40px);
+            z-index: -1;
+        }
+        
+        /* Wave animation */
+        .wave-animation {
+            animation-name: wave;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            transform-origin: 70% 70%;
+            display: inline-block;
+        }
+        
+        /* Gradient border */
+        .gradient-border {
+            position: relative;
+            border-radius: 1rem;
+        }
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1rem;
+            padding: 2px;
+            background: linear-gradient(45deg, #6C63FF, #FF6584, #00C9A7);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        
+        /* Pulse animation */
+        .pulse-animation {
+            animation: pulse-slow 4s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-dark-900 dark:text-gray-100">
+    <!-- Loading overlay -->
+    <div id="loading" class="fixed inset-0 bg-white dark:bg-dark-900 z-50 flex flex-col items-center justify-center">
+        <div class="loader"></div>
+        <p class="mt-4 text-lg font-medium">Loading Portfolio...</p>
+    </div>
+
+    <!-- Background blobs -->
+    <div class="fixed inset-0 overflow-hidden z-0">
+        <div class="blob top-[-150px] left-[-150px]"></div>
+        <div class="blob bottom-[-150px] right-[-150px] bg-gradient-to-r from-secondary-light to-accent-light"></div>
+    </div>
+
+    <!-- Header with Navigation -->
+    <header class="sticky top-0 z-40 bg-white/80 dark:bg-dark-800/80 backdrop-blur-lg shadow-sm transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6 py-3">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold bg-gradient-to-r from-primary-light to-accent-light bg-clip-text text-transparent flex items-center">
+                    <span class="wave-animation">👋</span> Ruchil Parkar
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-6 items-center">
+                    <a href="#home" class="nav-link relative group text-gray-600 dark:text-gray-300 hover:text-primary-light dark:hover:text-primary-dark transition">
+                        Home
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-light dark:bg-primary-dark transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#about" class="nav-link relative group text-gray-600 dark:text-gray-300 hover:text-primary-light dark:hover:text-primary-dark transition">
+                        About
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-light dark:bg-primary-dark transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#achievements" class="nav-link relative group text-gray-600 dark:text-gray-300 hover:text-primary-light dark:hover:text-primary-dark transition">
+                        Achievements
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-light dark:bg-primary-dark transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#goals" class="nav-link relative group text-gray-600 dark:text-gray-300 hover:text-primary-light dark:hover:text-primary-dark transition">
+                        Goals
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-light dark:bg-primary-dark transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#personal" class="nav-link relative group text-gray-600 dark:text-gray-300 hover:text-primary-light dark:hover:text-primary-dark transition">
+                        Personal
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-light dark:bg-primary-dark transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="#contact" class="nav-link relative group text-gray-600 dark:text-gray-300 hover:text-primary-light dark:hover:text-primary-dark transition">
+                        Contact
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-light dark:bg-primary-dark transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="shop.html" class="nav-link relative group text-gray-600 dark:text-gray-300 hover:text-primary-light dark:hover:text-primary-dark transition">
+                        Shop
+                        <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary-light dark:bg-primary-dark transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="Ruchil_Parkar_CV.pdf" download="Ruchil_Parkar_CV.pdf" class="px-4 py-2 bg-gradient-to-r from-primary-light to-secondary-light text-white rounded-lg transition duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl text-center font-medium flex items-center">
+                        <i class="fas fa-download mr-2"></i> Download CV
+                    </a>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-dark-700 hover:bg-gray-300 dark:hover:bg-dark-600 transition-colors">
+                        <i id="theme-icon" class="fas fa-moon text-gray-800 dark:text-yellow-300"></i>
+                    </button>
+                    <button id="mobile-menu-button" class="md:hidden text-gray-800 dark:text-gray-200 focus:outline-none">
+                        <div class="hamburger">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 pb-3">
+                <a href="#home" class="block px-4 py-2 rounded-md bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300 transition-all hover:bg-blue-100 dark:hover:bg-blue-800/50">Home</a>
+                <a href="#about" class="block px-4 py-2 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/50 hover:text-blue-600 dark:hover:text-blue-300 transition-all">About</a>
+                <a href="#achievements" class="block px-4 py-2 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/50 hover:text-blue-600 dark:hover:text-blue-300 transition-all">Achievements</a>
+                <a href="#goals" class="block px-4 py-2 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/50 hover:text-blue-600 dark:hover:text-blue-300 transition-all">Goals</a>
+                <a href="#personal" class="block px-4 py-2 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/50 hover:text-blue-600 dark:hover:text-blue-300 transition-all">Personal</a>
+                <a href="#contact" class="block px-4 py-2 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/50 hover:text-blue-600 dark:hover:text-blue-300 transition-all">Contact</a>
+                <a href="shop.html" class="block px-4 py-2 rounded-md hover:bg-blue-50 dark:hover:bg-blue-900/50 hover:text-blue-600 dark:hover:text-blue-300 transition-all">Shop</a>
+                <a href="Ruchil_Parkar_CV.pdf" download="Ruchil_Parkar_CV.pdf" class="block px-4 py-2 rounded-md bg-gradient-to-r from-primary-light to-secondary-light text-white text-center font-medium flex items-center justify-center">
+                    <i class="fas fa-download mr-2"></i> Download CV
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Scroll to top button -->
+    <div id="scroll-top" class="scroll-top">
+        <i class="fas fa-arrow-up text-xl"></i>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="py-16 md:py-24 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-dark-800 dark:to-dark-700 transition-colors duration-300 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center relative z-10">
+            <div class="md:w-1/2 mb-10 md:mb-0 animate-fade-in">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 leading-tight">
+                    <span class="gradient-text">Hello, I'm</span><br>
+                    <span class="typewriter">Ruchil Parkar</span>
+                </h1>
+                <p class="text-xl text-gray-600 dark:text-gray-300 mb-6">Web Developer | Game Developer | Graphic Designer</p>
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                    <a href="#about" class="px-6 py-3 bg-gradient-to-r from-primary-light to-secondary-light text-white rounded-lg transition duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl text-center font-medium">
+                        Explore More
+                    </a>
+                    <a href="#contact" class="px-6 py-3 border border-primary-light text-primary-light dark:text-primary-dark hover:bg-blue-50 dark:hover:bg-dark-700 rounded-lg transition duration-300 transform hover:-translate-y-1 shadow-md hover:shadow-lg text-center font-medium">
+                        Contact Me
+                    </a>
+                    <a href="Ruchil_Parkar_CV.pdf" download="Ruchil_Parkar_CV.pdf" class="px-6 py-3 bg-gray-900 text-white rounded-lg transition duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl text-center font-medium flex items-center justify-center">
+                        <i class="fas fa-download mr-2"></i> Download CV
+                    </a>
+                </div>
+                <div class="mt-8 flex space-x-4">
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 rounded-full bg-green-500 mr-2 pulse-animation"></div>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Available for part-time</span>
+                    </div>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex flex-col items-center">
+                <div class="w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-full overflow-hidden border-4 border-white dark:border-dark-800 shadow-xl mb-6 relative animate-float gradient-border">
+                    <img src="./my-img.jpg" 
+                         alt="Ruchil Parkar portrait" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 rounded-full border-2 border-white dark:border-dark-800 animate-glow"></div>
+                </div>
+                <div class="w-full max-w-md glass p-4 sm:p-6 rounded-xl shadow-lg backdrop-blur-md">
+                    <h3 class="text-lg font-semibold mb-3">Youtube Video</h3>
+                    <div class="video-container rounded-lg overflow-hidden">
+                        <iframe src="https://www.youtube.com/embed/a8p-l75icsA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 md:py-20 bg-white dark:bg-dark-800 transition-colors duration-300 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <h2 class="text-3xl font-bold text-center mb-12 md:mb-16">
+                <span class="gradient-text">About Me</span>
+            </h2>
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-8 lg:pr-10">
+                    <h3 class="text-2xl font-semibold mb-4">Who I Am</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-6">
+                        I'm a passionate digital creator based in Mumbai, blending the worlds of Computer Science and Design to craft meaningful digital experiences. My journey into tech started early—at just 16, I built my first website, and I've been captivated by the power of technology ever since.
+
+                        What drives me is the intersection of innovation and human experience. I don't just build things—I design with intention, focusing on how users feel, interact, and connect. With a strong foundation in both coding and creative problem-solving, I aim to bridge functionality and aesthetics in every project I touch.
+                    </p>
+                    <div class="glass p-4 sm:p-6 rounded-lg backdrop-blur-md mb-6">
+                        <h4 class="font-semibold mb-3">Education</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-graduation-cap text-primary-light dark:text-primary-dark mt-1 mr-3"></i>
+                                <span>Btech in Electronic & Computer Science - St john college of engineering and management (2024-2027)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-graduation-cap text-primary-light dark:text-primary-dark mt-1 mr-3"></i>
+                                <span>Diploma in Information Technology - Pravin Patil Polytechnic (2021-2024)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold mb-4">My Skills</h3>
+                    <div class="mb-8">
+                        <h4 class="font-medium mb-2">Technical Skills</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-dark-700 text-blue-800 dark:text-blue-300 rounded-full transition-all hover:bg-blue-200 dark:hover:bg-dark-600">JavaScript</span>
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-dark-700 text-blue-800 dark:text-blue-300 rounded-full transition-all hover:bg-blue-200 dark:hover:bg-dark-600">Cpp</span>
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-dark-700 text-blue-800 dark:text-blue-300 rounded-full transition-all hover:bg-blue-200 dark:hover:bg-dark-600">Python</span>
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-dark-700 text-blue-800 dark:text-blue-300 rounded-full transition-all hover:bg-blue-200 dark:hover:bg-dark-600">UI/UX Design</span>
+                            <span class="px-3 py-1 bg-blue-100 dark:bg-dark-700 text-blue-800 dark:text-blue-300 rounded-full transition-all hover:bg-blue-200 dark:hover:bg-dark-600">Machine Learning</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-medium mb-2">Languages</h4>
+                        <div class="space-y-3">
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span>Marathi</span>
+                                    <span class="text-primary-light dark:text-primary-dark">Native</span>
+                                </div>
+                                <div class="w-full bg-gray-200 dark:bg-dark-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-primary-light to-secondary-light h-2 rounded-full transition-all duration-500" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span>English</span>
+                                    <span class="text-primary-light dark:text-primary-dark">Fluent</span>
+                                </div>
+                                <div class="w-full bg-gray-200 dark:bg-dark-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-primary-light to-secondary-light h-2 rounded-full transition-all duration-500" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1">
+                                    <span>Italian English</span>
+                                    <span class="text-primary-light dark:text-primary-dark">Intermediate</span>
+                                </div>
+                                <div class="w-full bg-gray-200 dark:bg-dark-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-primary-light to-secondary-light h-2 rounded-full transition-all duration-500" style="width: 40%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section id="achievements" class="py-16 md:py-20 bg-gray-50 dark:bg-dark-900 transition-colors duration-300 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <h2 class="text-3xl font-bold text-center mb-12 md:mb-16">
+                <span class="gradient-text">My Achievements</span>
+            </h2>
+            <div id="achievements-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Achievements will be loaded from JSON -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Future Goals Section -->
+    <section id="goals" class="py-16 md:py-20 bg-white dark:bg-dark-800 transition-colors duration-300 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <h2 class="text-3xl font-bold text-center mb-12 md:mb-16">
+                <span class="gradient-text">My Future Goals</span>
+            </h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <div class="relative gradient-border">
+                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" 
+                             alt="Future Goals illustration" class="rounded-xl shadow-lg w-full transition-all hover:shadow-xl">
+                        <div class="absolute inset-0 rounded-xl bg-gradient-to-t from-dark-900/70 via-transparent to-transparent"></div>
+                    </div>
+                </div>
+                
+            <div class="md:w-1/2 md:pl-8 lg:pl-12">
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold mb-4 gradient-text">Short-term (1-3 years)</h3>
+                    <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary-dark mt-1 mr-3"></i>
+                            <span>Launch my own startup focused on educational technology</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary-dark mt-1 mr-3"></i>
+                            <span>Complete my professional certification in AI Ethics</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary-dark mt-1 mr-3"></i>
+                            <span>Start freelancing or internship for real-world experience.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mb-8">
+                    <h3 class="text-2xl font-semibold mb-4 gradient-text">Medium-term (3-5 years)</h3>
+                    <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary-dark mt-1 mr-3"></i>
+                            <span>Develop technology solutions for climate change monitoring</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary-dark mt-1 mr-3"></i>
+                            <span> Build a personal brand</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary-dark mt-1 mr-3"></i>
+                            <span>Publish a book on responsible technology development</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4 gradient-text">Long-term (5+ years)</h3>
+                    <ul class="space-y-3 text-gray-700 dark:text-gray-300">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary-dark mt-1 mr-3"></i>
+                            <span>Create a research lab for human-centered AI</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary-dark mt-1 mr-3"></i>
+                            <span>Contribute to policy-making for ethical technology use</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-light dark:text-primary-dark mt-1 mr-3"></i>
+                            <span>Inspire the next generation of responsible technologists</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personal Side Section -->
+    <section id="personal" class="py-16 md:py-20 bg-gray-50 dark:bg-dark-900 transition-colors duration-300 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <h2 class="text-3xl font-bold text-center mb-12 md:mb-16">
+                <span class="gradient-text">Personal Side</span>
+            </h2>
+            
+            <!-- Hobbies -->
+            <div class="mb-12 md:mb-16">
+                <h3 class="text-2xl font-semibold mb-6 text-center">My Hobbies & Passions</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+                    <div class="glass p-4 sm:p-6 rounded-xl shadow-sm text-center hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 backdrop-blur-md">
+                        <div class="gradient-text text-3xl mb-3">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h4 class="font-medium">Photography</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Capturing moments and telling stories through my lens</p>
+                    </div>
+                    <div class="glass p-4 sm:p-6 rounded-xl shadow-sm text-center hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 backdrop-blur-md">
+                        <div class="gradient-text text-3xl mb-3">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <h4 class="font-medium">Music</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Playing guitar and composing electronic music</p>
+                    </div>
+                    <div class="glass p-4 sm:p-6 rounded-xl shadow-sm text-center hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 backdrop-blur-md">
+                        <div class="gradient-text text-3xl mb-3">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h4 class="font-medium">Gaming</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Exploring virtual worlds and game mechanics</p>
+                    </div>
+                    <div class="glass p-4 sm:p-6 rounded-xl shadow-sm text-center hover:shadow-md transition-all duration-300 transform hover:-translate-y-1 backdrop-blur-md">
+                        <div class="gradient-text text-3xl mb-3">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h4 class="font-medium">Reading</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">Sci-fi, philosophy, and tech non-fiction</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Role Models -->
+            <div class="mb-12 md:mb-16">
+                <h3 class="text-2xl font-semibold mb-6 text-center">My Role Models</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+                    <div class="glass p-4 sm:p-6 rounded-xl shadow-sm flex items-start transition-all hover:shadow-md backdrop-blur-md">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Vasily_Perov_-_%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%A4.%D0%9C.%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B5%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_-_Google_Art_Project.jpg/1200px-Vasily_Perov_-_%D0%9F%D0%BE%D1%80%D1%82%D1%80%D0%B5%D1%82_%D0%A4.%D0%9C.%D0%94%D0%BE%D1%81%D1%82%D0%BE%D0%B5%D0%B2%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_-_Google_Art_Project.jpg" 
+                             alt="Fyodor Dostoevsky" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-medium">Fyodor Dostoevsky</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">He is regarded as one of the greatest novelists in both Russian and world literature</p>
+                        </div>
+                    </div>
+                    <div class="glass p-4 sm:p-6 rounded-xl shadow-sm flex items-start transition-all hover:shadow-md backdrop-blur-md">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Commodore_Grace_M._Hopper%2C_USN_%28covered%29_head_and_shoulders_crop.jpg" 
+                             alt="Grace Hopper" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-medium">Grace Hopper</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Pioneering computer scientist who broke barriers in technology</p>
+                        </div>
+                    </div>
+                    <div class="glass p-4 sm:p-6 rounded-xl shadow-sm flex items-start transition-all hover:shadow-md backdrop-blur-md">
+                        <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" 
+                             alt="Marie Curie" class="w-16 h-16 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-medium">Marie Curie</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">For her relentless pursuit of scientific discovery against all odds</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Favorites -->
+            <div class="mb-12 md:mb-16">
+                <h3 class="text-2xl font-semibold mb-6 text-center">My Favorites</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                    <!-- Books -->
+                    <div>
+                        <h4 class="text-xl font-medium mb-4 gradient-text flex items-center">
+                            <i class="fas fa-book mr-2"></i> Books
+                        </h4>
+                        <ul id="books-list" class="space-y-3">
+                            <!-- Books will be loaded from JSON -->
+                        </ul>
+                    </div>
+                    
+                    <!-- Websites -->
+                    <div>
+                        <h4 class="text-xl font-medium mb-4 gradient-text flex items-center">
+                            <i class="fas fa-globe mr-2"></i> Websites
+                        </h4>
+                        <ul id="websites-list" class="space-y-3">
+                            <!-- Websites will be loaded from JSON -->
+                        </ul>
+                    </div>
+                    
+                    <!-- Startups -->
+                    <div>
+                        <h4 class="text-xl font-medium mb-4 gradient-text flex items-center">
+                            <i class="fas fa-rocket mr-2"></i> Startups
+                        </h4>
+                        <ul id="startups-list" class="space-y-3">
+                            <!-- Startups will be loaded from JSON -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Volunteering -->
+            <div>
+                <h3 class="text-2xl font-semibold mb-6 text-center">Volunteering Experience</h3>
+                <div class="glass p-6 rounded-xl shadow-sm max-w-3xl mx-auto transition-all hover:shadow-md backdrop-blur-md">
+                    <div class="flex flex-col md:flex-row">
+                        <div class="md:w-1/3 mb-4 md:mb-0">
+                            <div class="gradient-text text-5xl mb-2">
+                                <i class="fas fa-hands-helping"></i>
+                            </div>
+                            <h4 class="font-medium">Tech Educator</h4>
+                            <div class="text-sm text-gray-500 dark:text-gray-400">2023-Present</div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <p class="text-gray-700 dark:text-gray-300">
+                                Actively contributed to community-focused initiatives by supporting events, assisting teams, and promoting awareness on key issues. Gained hands-on experience in teamwork, communication, and event coordination while making a positive social impact.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 md:py-20 bg-white dark:bg-dark-800 transition-colors duration-300 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <h2 class="text-3xl font-bold text-center mb-12 md:mb-16">
+                <span class="gradient-text">Get In Touch</span>
+            </h2>
+            <div class="flex flex-col lg:flex-row gap-8 md:gap-12">
+                <div class="lg:w-1/2">
+                    <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                    <div class="space-y-4 sm:space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 dark:bg-dark-700 p-3 rounded-full mr-4">
+                                <i class="fas fa-map-marker-alt text-primary-light dark:text-primary-dark text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Location</h4>
+                                <p class="text-gray-600 dark:text-gray-400">Mumbai, Maharashtra</p>
+                                <div class="mt-4 rounded-lg overflow-hidden">
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.1160994769!2d72.74109995!3d19.0821978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b63d8f0f6f01%3A0x7e4a0b5e0b0a0c0!2sMumbai%2C%20Maharashtra%2C%20India!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" 
+                                        width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" 
+                                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 dark:bg-dark-700 p-3 rounded-full mr-4">
+                                <i class="fas fa-phone text-primary-light dark:text-primary-dark text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Phone</h4>
+                                <a href="tel:+919082350862" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transition">+919082350862</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 dark:bg-dark-700 p-3 rounded-full mr-4">
+                                <i class="fas fa-envelope text-primary-light dark:text-primary-dark text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Email</h4>
+                                <a href="mailto:ruchilparkar2406@gmail.com" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transition">ruchilparkar2406@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 dark:bg-dark-700 p-3 rounded-full mr-4">
+                                <i class="fab fa-whatsapp text-primary-light dark:text-primary-dark text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">WhatsApp</h4>
+                                <a href="https://wa.me/+919082350862" target="_blank" rel="noopener noreferrer" class="text-gray-600 dark:text-gray-400 hover:text-primary-light dark:hover:text-primary-dark transition">Chat on WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-8 md:mt-10">
+                        <h3 class="text-2xl font-semibold mb-6">Connect With Me</h3>
+                        <div class="flex space-x-4">
+                            <a href="https://www.linkedin.com/in/ruchil-parkar-802213279?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
+                               target="_blank" rel="noopener noreferrer" class="bg-gray-100 dark:bg-dark-700 p-3 rounded-full text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-dark-600 hover:text-primary-light dark:hover:text-primary-dark transition transform hover:-translate-y-1">
+                                <i class="fab fa-linkedin-in text-xl"></i>
+                            </a>
+                            <a href="https://github.com/ruchilllllll" target="_blank, rel="noopener noreferrer" class="bg-gray-100 dark:bg-dark-700 p-3 rounded-full text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-dark-600 hover:text-primary-light dark:hover:text-primary-dark transition transform hover:-translate-y-1">
+                                <i class="fab fa-github text-xl"></i>
+                            </a>
+                            <a href="https://x.com/RuchilParkar20?t=ObfEF8pHocoIlNtqkRhSVw&s=09" target="_blank" rel="noopener noreferrer" class="bg-gray-100 dark:bg-dark-700 p-3 rounded-full text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-dark-600 hover:text-primary-light dark:hover:text-primary-dark transition transform hover:-translate-y-1">
+                                <i class="fab fa-twitter text-xl"></i>
+                            </a>
+                            <a href="https://www.instagram.com/rxchillll?igsh=MXAwNnMxZ282eDFwcw==" target="_blank" rel="noopener noreferrer" class="bg-gray-100 dark:bg-dark-700 p-3 rounded-full text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-dark-600 hover:text-primary-light dark:hover:text-primary-dark transition transform hover:-translate-y-1">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <h3 class="text-2xl font-semibold mb-6">Send Me a Message</h3>
+                    <form id="contact-form" class="space-y-4 sm:space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                            <div>
+                                <label for="name" class="block mb-2 font-medium">Your Name</label>
+                                <input type="text" id="name" name="name" required 
+                                       class="w-full px-4 py-2 border border-gray-300 dark:border-dark-600 rounded-lg focus:ring-primary-light focus:border-primary-light dark:bg-dark-700 dark:placeholder-gray-400 transition glass">
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-2 font-medium">Your Email</label>
+                                <input type="email" id="email" name="email" required 
+                                       class="w-full px-4 py-2 border border-gray-300 dark:border-dark-600 rounded-lg focus:ring-primary-light focus:border-primary-light dark:bg-dark-700 dark:placeholder-gray-400 transition glass">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="subject" class="block mb-2 font-medium">Subject</label>
+                            <input type="text" id="subject, name="subject" required 
+                                   class="w-full px-4 py-2 border border-gray-300 dark:border-dark-600 rounded-lg focus:ring-primary-light focus:border-primary-light dark:bg-dark-700 dark:placeholder-gray-400 transition glass">
+                        </div>
+                        <div>
+                            <label for="message" class="block mb-2 font-medium">Your Message</label>
+                            <textarea id="message" name="message" rows="5" required 
+                                      class="w-full px-4 py-2 border border-gray-300 dark:border-dark-600 rounded-lg focus:ring-primary-light focus:border-primary-light dark:bg-dark-700 dark:placeholder-gray-400 transition glass"></textarea>
+                        </div>
+                        <button type="submit" class="px-6 py-3 bg-gradient-to-r from-primary-light to-secondary-light text-white rounded-lg transition duration-300 w-full transform hover:-translate-y-1 shadow-lg hover:shadow-xl font-medium">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Demo Section -->
+    <section class="py-12 md:py-16 bg-gray-50 dark:bg-dark-900 transition-colors duration-300 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <h2 class="text-3xl font-bold text-center mb-8 md:mb-12">
+                <span class="gradient-text">Inspiration Corner</span>
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div class="glass p-6 rounded-xl shadow-lg backdrop-blur-md transition-all hover:shadow-xl">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-quote-left gradient-text mr-2"></i> 
+                        Quote of the Day
+                    </h3>
+                    <div id="quote-container" class="text-gray-700 dark:text-gray-300 italic mb-4">
+                        Loading quote...
+                    </div>
+                    <div id="quote-author" class="text-right font-medium gradient-text">
+                        &mdash; Author
+                    </div>
+                    <button id="new-quote" class="mt-4 px-4 py-2 bg-gradient-to-r from-primary-light to-secondary-light text-white rounded-lg transition transform hover:-translate-y-1 shadow-md hover:shadow-lg">
+                        New Quote
+                    </button>
+                </div>
+                <div class="glass p-6 rounded-xl shadow-lg backdrop-blur-md transition-all hover:shadow-xl">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-laugh-squint gradient-text mr-2"></i>
+                        Joke of the Day
+                    </h3>
+                    <div id="joke-container" class="text-gray-700 dark:text-gray-300 mb-4">
+                        Loading joke...
+                    </div>
+                    <button id="new-joke" class="mt-4 px-4 py-2 bg-gradient-to-r from-primary-light to-secondary-light text-white rounded-lg transition transform hover:-translate-y-1 shadow-md hover:shadow-lg">
+                        Another Joke
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-800 dark:bg-dark-950 text-white py-8 md:py-12 transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0 text-center md:text-left">
+                    <div class="text-2xl font-bold gradient-text mb-2">Ruchil Parkar</div>
+                    <p class="text-gray-400">You want a plan B? Nah. Plan A has to work</p>
+                </div>
+                <div class="flex space-x-6 mb-6 md:mb-0">
+                    <a href="https://www.linkedin.com/in/ruchil-parkar-802213279?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                       target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition transform hover:-translate-y-1">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+                    <a href="https://github.com/ruchilllllll" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition transform hover:-translate-y-1">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="https://x.com/RuchilParkar20?t=ObfEF8pHocoIlNtqkRhSVw&s=09" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition transform hover:-translate-y-1">
+                        <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com/rxchillll?igsh=MXAwNnMxZ282eDFwcw==" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition transform hover:-translate-y-1">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-400 mb-4 md:mb-0 text-center md:text-left">
+                    &copy; 2025 Ruchil Parkar. All rights reserved.
+                </div>
+                <div class="flex flex-wrap justify-center space-x-4 md:space-x-6">
+                    <a href="#home" class="text-gray-400 hover:text-white transition">Home</a>
+                    <a href="#about" class="text-gray-400 hover:text-white transition">About</a>
+                    <a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JSON Data Script -->
+    <script>
+        // This would normally be in a separate data.json file
+        const portfolioData = {
+            "achievements": [
+                {
+                    "icon": "trophy",
+                    "title": "Google Code-in Winner",
+                    "description": "Won the Google Code-in competition in 2019 as one of the top contributors to open-source projects.",
+                    "date": "December 2019"
+                },
+                {
+                    "icon": "medal",
+                    "title": "Developed a Full Game as Final Year Diploma Project",
+                    "description": "Designed and built a complete game from scratch as part of my diploma’s final project. Handled game design, UI/UX, logic, and testing. This project helped me strengthen my programming skills and explore interactive user experience design..",
+                    "date": "Feb 2024"
+                },
+                {
+                    "icon": "star",
+                    "title": "Completed Online Courses in App & Web Development",
+                    "description": "Successfully completed courses in Flutter, React.js, and full-stack development from platforms like Coursera, freeCodeCamp, or Udemy. This gave me a solid foundation in real-world coding practices.",
+                    "date": "March 2022"
+                },
+                {
+                    "icon": "book",
+                    "title": "Published Research Paper",
+                    "description": "Co-authored a paper on 'AI for Social Good' published in the IEEE Transactions journal.",
+                    "date": "January 2023"
+                },
+                {
+                    "icon": "github",
+                    "title": "Contributed to Open Source Projects",
+                    "description": "Participated in open-source development by contributing bug fixes, features, or UI improvements to GitHub repositories. This taught me about collaborative development, version control, and code quality standards.",
+                    "date": "2021"
+                },
+                {
+                    "icon": "project-diagram",
+                    "title": " Built a Responsive Web App Using React and Firebase",
+                    "description": "Created a dynamic, fully responsive web application with real-time data features using React.js and Firebase. Implemented authentication, database, and clean UI. This improved my understanding of frontend-backend integration",
+                    "date": "2023"
+                }
+            ],
+            "books": [
+                {
+                    "title": "Crime and Punishment by Fyodor Dostoevsky",
+                    "description": "Based on Guilt, redemption, morality, and justice"
+                },
+                {
+                    "title": "The Design of Everyday Things by Don Norman",
+                    "description": "Fundamental to my design thinking"
+                },
+                {
+                    "title": "The Lord of the Rings by J.R.R. Tolkien",
+                    "description": "Epic Fantasy"
+                }
+            ],
+            "websites": [
+                {
+                    "title": "Wait But Why",
+                    "description": "Deep dives into complex topics"
+                },
+                {
+                    "title": "Reddit",
+                    "description": "Social news aggregation"
+                },
+                {
+                    "title": "The Pudding",
+                    "description": "Data journalism at its best"
+                }
+            ],
+            "startups": [
+                {
+                    "title": "Duolingo",
+                    "description": "Making language learning accessible"
+                },
+                {
+                    "title": "Figma",
+                    "description": "Web-based UI design tool"
+                },
+                {
+                    "title": "OpenAI",
+                    "description": "Pushing AI boundaries responsibly"
+                }
+            ]
+        };
+
+        // Load data into the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate loading delay
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+            }, 1000);
+
+            // Load achievements
+            const achievementsContainer = document.getElementById('achievements-container');
+            portfolioData.achievements.forEach(achievement => {
+                const achievementHTML = `
+                    <div class="glass p-4 sm:p-6 rounded-xl shadow-lg backdrop-blur-md transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1">
+                        <div class="gradient-text text-3xl sm:text-4xl mb-4">
+                            <i class="fas fa-${achievement.icon}"></i>
+                        </div>
+                        <h3 class="text-lg sm:text-xl font-semibold mb-2">${achievement.title}</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm sm:text-base">${achievement.description}</p>
+                        <div class="text-sm gradient-text">${achievement.date}</div>
+                    </div>
+                `;
+                achievementsContainer.innerHTML += achievementHTML;
+            });
+
+            // Load books
+            const booksList = document.getElementById('books-list');
+            portfolioData.books.forEach(book => {
+                booksList.innerHTML += `
+                    <li class="glass p-3 sm:p-4 rounded-lg shadow-sm transition-all hover:shadow-md backdrop-blur-md">
+                        <div class="font-medium">"${book.title}"</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">${book.description}</div>
+                    </li>
+                `;
+            });
+
+            // Load websites
+            const websitesList = document.getElementById('websites-list');
+            portfolioData.websites.forEach(website => {
+                websitesList.innerHTML += `
+                    <li class="glass p-3 sm:p-4 rounded-lg shadow-sm transition-all hover:shadow-md backdrop-blur-md">
+                        <div class="font-medium">${website.title}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">${website.description}</div>
+                    </li>
+                `;
+            });
+
+            // Load startups
+            const startupsList = document.getElementById('startups-list');
+            portfolioData.startups.forEach(startup => {
+                startupsList.innerHTML += `
+                    <li class="glass p-3 sm:p-4 rounded-lg shadow-sm transition-all hover:shadow-md backdrop-blur-md">
+                        <div class="font-medium">${startup.title}</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">${startup.description}</div>
+                    </li>
+                `;
+            });
+
+            // Mobile menu toggle with animation
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const hamburger = document.querySelector('.hamburger');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                hamburger.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    hamburger.classList.remove('active');
+                });
+            });
+
+            // Theme toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            
+            // Check for saved theme preference or use system preference
+            if (localStorage.getItem('color-theme') === 'dark' || 
+                (!localStorage.getItem('color-thetheme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+            
+            themeToggle.addEventListener('click', () => {
+                // Toggle the theme
+                document.documentElement.classList.toggle('dark');
+                
+                // Update icon
+                if (document.documentElement.classList.contains('dark')) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Highlight active nav link on scroll
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= (sectionTop - 300)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('text-primary-light', 'dark:text-primary-dark');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('text-primary-light', 'dark:text-primary-dark');
+                    }
+                });
+            });
+
+            // Scroll to top button
+            const scrollTopBtn = document.getElementById('scroll-top');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('active');
+                } else {
+                    scrollTopBtn.classList.remove('active');
+                }
+            });
+            
+            scrollTopBtn.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Contact form submission
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                // In a real implementation, you would send this data to a server
+                alert('Thank you for your message! I will get back to you soon.');
+                this.reset();
+            });
+
+            // API Demo: Quotes
+            const quoteContainer = document.getElementById('quote-container');
+            const quoteAuthor = document.getElementById('quote-author');
+            const newQuoteBtn = document.getElementById('new-quote');
+            
+            async function fetchQuote() {
+                try {
+                    quoteContainer.textContent = 'Loading...';
+                    quoteAuthor.textContent = '';
+                    
+                    const response = await fetch('https://api.quotable.io/random');
+                    const data = await response.json();
+                    quoteContainer.textContent = `"${data.content}"`;
+                    quoteAuthor.textContent = `— ${data.author}`;
+                } catch (error) {
+                    quoteContainer.textContent = "Be the kind of person that when your feet hit the floor in the morning, the devil says, 'Oh no, they’re up.'";
+                    quoteAuthor.textContent = '— Ruchil Parkar';
+                }
+            }
+            
+            newQuoteBtn.addEventListener('click', fetchQuote);
+            fetchQuote(); // Initial quote
+
+            
+
+            // API Demo: Jokes
+            const jokeContainer = document.getElementById('joke-container');
+            const newJokeBtn = document.getElementById('new-joke');
+            
+            async function fetchJoke() {
+                try {
+                    jokeContainer.textContent = 'Loading...';
+                    
+                    const response = await fetch('https://v2.jokeapi.dev/joke/Programming?type=single');
+                    const data = await response.json();
+                    jokeContainer.textContent = data.joke;
+                } catch (error) {
+                    jokeContainer.textContent = 'Why do programmers prefer dark mode? Because light attracts bugs!';
+                }
+            }
+            
+            newJokeBtn.addEventListener('click', fetchJoke);
+            fetchJoke(); // Initial joke
+        });
+    </script>
+</body>
+</html>

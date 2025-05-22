@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | Ruchil Parkar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
+        
+        :root {
+            --primary: #251dbd;
+            --primary-dark: #676770;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            scroll-behavior: smooth;
+            background-color: var(--light);
+            color: #1e293b;
+        }
+        
+        body.dark {
+            background-color: #0f172a;
+            color: #f8fafc;
+            --dark: #f8fafc;
+            --light: #0f172a;
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .cart-sidebar {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-out;
+        }
+        
+        .cart-sidebar.open {
+            transform: translateX(0);
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .product-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+        
+        .product-card:hover::before {
+            opacity: 1;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .bounce {
+            animation: bounce 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .badge {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            z-index: 10;
+        }
+        
+        .badge-new {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .badge-sale {
+            background-color: #ef4444;
+            color: white;
+        }
+        
+        .badge-featured {
+            background-color: #f59e0b;
+            color: white;
+        }
+        
+        .product-image {
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .add-to-cart {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .add-to-cart::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .add-to-cart:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(79, 70, 229, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .floating-notification {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transform: translateX(120%);
+            transition: transform 0.3s ease-out;
+            z-index: 1000;
+        }
+        
+        .floating-notification.show {
+            transform: translateX(0);
+        }
+        
+        .floating-notification.success {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .floating-notification.error {
+            background-color: #ef4444;
+            color: white;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            border-radius: 9999px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .quantity-control {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .quantity-btn {
+            padding: 0.25rem 0.5rem;
+            background-color: rgba(0, 0, 0, 0.05);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .dark .quantity-btn {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .quantity-input {
+            width: 2rem;
+            text-align: center;
+            border: none;
+            background: transparent;
+            -moz-appearance: textfield;
+        }
+        
+        .quantity-input::-webkit-outer-spin-button,
+        .quantity-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 100%);
+        }
+        
+        .footer-gradient {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        
+        .dark .footer-gradient {
+            background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+        }
+        
+        .checkout-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .checkout-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .checkout-btn:hover::after {
+            left: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Loading overlay -->
+    <div id="loading" class="fixed inset-0 bg-white dark:bg-gray-900 z-50 flex flex-col items-center justify-center transition-opacity duration-300">
+        <div class="loading-spinner"></div>
+        <p class="mt-4 text-lg font-medium">Loading Shop...</p>
+    </div>
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-40 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-sm transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6 py-3">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                    Ruchil's Collection
+                </a>
+                
+                <nav class="hidden md:flex space-x-6 items-center">
+                    <a href="index.html" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Home</a>
+                    <a href="#products" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Products</a>
+                    <a href="#about" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">About</a>
+                    <a href="#testimonials" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Testimonials</a>
+                    <button id="cart-button" class="relative group">
+                        <i class="fas fa-shopping-cart text-xl group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+                        <i id="theme-icon" class="fas fa-moon text-gray-800 dark:text-yellow-300"></i>
+                    </button>
+                </nav>
+                
+                <div class="flex items-center space-x-4 md:hidden">
+                    <button id="mobile-cart-button" class="relative group">
+                        <i class="fas fa-shopping-cart text-xl group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition"></i>
+                        <span id="mobile-cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                    <button id="mobile-menu-button" class="text-gray-800 dark:text-gray-200 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 pb-3">
+                <a href="index.html" class="block px-4 py-2 rounded-md hover:bg-indigo-50 dark:hover:bg-indigo-900/50 transition">Home</a>
+                <a href="#products" class="block px-4 py-2 rounded-md hover:bg-indigo-50 dark:hover:bg-indigo-900/50 transition">Products</a>
+                <a href="#about" class="block px-4 py-2 rounded-md hover:bg-indigo-50 dark:hover:bg-indigo-900/50 transition">About</a>
+                <a href="#testimonials" class="block px-4 py-2 rounded-md hover:bg-indigo-50 dark:hover:bg-indigo-900/50 transition">Testimonials</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24 hero-gradient text-white">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <h1 class="text-4xl sm:text-5xl font-bold mb-4 animate-fade-in">Ruchil's Collection</h1>
+            <p class="text-xl mb-8 max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.2s">Discover the latest and greatest tech accessories at unbeatable prices</p>
+            <a href="#products" class="inline-block px-6 py-3 bg-white text-indigo-600 rounded-lg font-medium shadow-lg hover:shadow-xl transition hover:scale-105 transform animate-fade-in" style="animation-delay: 0.4s">
+                Shop Now <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-12 md:py-16 bg-white dark:bg-gray-900 transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">Featured Products</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Handpicked selection of premium products just for you</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md transition-all duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRHoIDr-mzt94zFx0SzDxwH99Mh-mF5N06Wz1ZDK96q4Z424_EE4I5wc0gQfEF6XSbbTKUXAnEpmtxXyePrWc58NocRzYDRKrh1_7HWZ9raPcrd20O_YyJd" 
+                             alt="Blackmagic URSA Cine 12K" class="w-full h-full object-cover product-image">
+                        <div class="badge badge-sale">Sale</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-semibold text-lg mb-1">Blackmagic URSA Cine 12K</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-500 dark:text-gray-400 text-sm ml-2">(824)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-gray-500 dark:text-gray-400 line-through mr-2">$19,999.99</span>
+                                <span class="font-bold text-lg text-indigo-600 dark:text-indigo-400">$9,999.99</span>
+                            </div>
+                            <button class="add-to-cart px-3 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition" 
+                                    data-id="1" 
+                                    data-name="Blackmagic URSA Cine 12K" 
+                                    data-price="9999.99" 
+                                    data-image="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRHoIDr-mzt94zFx0SzDxwH99Mh-mF5N06Wz1ZDK96q4Z424_EE4I5wc0gQfEF6XSbbTKUXAnEpmtxXyePrWc58NocRzYDRKrh1_7HWZ9raPcrd20O_YyJd">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md transition-all duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://pressroom.zenith-watches.com/app/uploads/2025/02/2-STILL-1_Chronomaster-Revolution_10.A3818.400-2.21.R100_16x9jpg.jpg" 
+                             alt="Zenith Chronomaster Sport" class="w-full h-full object-cover product-image">
+                        <div class="badge badge-featured">Featured</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-semibold text-lg mb-1">Zenith Chronomaster Sport</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 dark:text-gray-400 text-sm ml-2">(89)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-lg text-indigo-600 dark:text-indigo-400">$1,78,989.99</span>
+                            <button class="add-to-cart px-3 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition" 
+                                    data-id="2" 
+                                    data-name="Zenith Chronomaster Sport" 
+                                    data-price="178989.99" 
+                                    data-image="https://pressroom.zenith-watches.com/app/uploads/2025/02/2-STILL-1_Chronomaster-Revolution_10.A3818.400-2.21.R100_16x9jpg.jpg">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md transition-all duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQz8c4rTYvrZlRN8Mm_F8bkzkQuwaeL_pWDEcmqG9oklJQyqChHfRr5vCEF4BJ2mkVdVIN_CWI0zWuSYzKHk-ww2qj_hlews3R5FeV7IiA" 
+                             alt="AC MILAN 2005/2006 HOME" class="w-full h-full object-cover product-image">
+                        <div class="badge badge-new">New</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-semibold text-lg mb-1">AC MILAN 2005/2006 HOME</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-500 dark:text-gray-400 text-sm ml-2">(9,915)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-lg text-indigo-600 dark:text-indigo-400">$779.99</span>
+                            <button class="add-to-cart px-3 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition" 
+                                    data-id="3" 
+                                    data-name="AC MILAN 2005/2006 HOME" 
+                                    data-price="779.99" 
+                                    data-image="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQz8c4rTYvrZlRN8Mm_F8bkzkQuwaeL_pWDEcmqG9oklJQyqChHfRr5vCEF4BJ2mkVdVIN_CWI0zWuSYzKHk-ww2qj_hlews3R5FeV7IiA">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md transition-all duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://iotworm.com/wp-content/uploads/2021/08/8Pack-OrionX-Gaming-PC-Most-expensive-gaming-pc.jpg" 
+                             alt="Gaming PC" class="w-full h-full object-cover product-image">
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-semibold text-lg mb-1">Gaming PC</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-500 dark:text-gray-400 text-sm ml-2">(64,357)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-lg text-indigo-600 dark:text-indigo-400">$9800.99</span>
+                            <button class="add-to-cart px-3 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition" 
+                                    data-id="4" 
+                                    data-name="Gaming PC" 
+                                    data-price="9800.99" 
+                                    data-image="https://iotworm.com/wp-content/uploads/2021/08/8Pack-OrionX-Gaming-PC-Most-expensive-gaming-pc.jpg">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Product 5 -->
+                <div class="product-card bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md transition-all duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQjDok7HKk46PCw9ZnJFrmY8ozphxqWOzBhHcKECsTdnbDdkgpDWUhdL3bUfYWC7RldVAUjs1JoKK41qklFHO6raGCOeeAYxh2NTXSiLAJAetEwXhU6ByU0GA" 
+                             alt="Ghost of Yotei" class="w-full h-full object-cover product-image">
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-semibold text-lg mb-1">Ghost of Yotei</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-500 dark:text-gray-400 text-sm ml-2">(64,357)</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-lg text-indigo-600 dark:text-indigo-400">$90.99</span>
+                            <button class="add-to-cart px-3 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition" 
+                                    data-id="5" 
+                                    data-name="Ghost of Yotei" 
+                                    data-price="90.99" 
+                                    data-image="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQjDok7HKk46PCw9ZnJFrmY8ozphxqWOzBhHcKECsTdnbDdkgpDWUhdL3bUfYWC7RldVAUjs1JoKK41qklFHO6raGCOeeAYxh2NTXSiLAJAetEwXhU6ByU0GA">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block px-6 py-3 border border-indigo-600 text-indigo-600 dark:text-indigo-400 dark:border-indigo-400 rounded-lg font-medium hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition">
+                    View All Products <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-12 md:py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">Why Choose Us</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">We provide the best shopping experience for our customers</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-shipping-fast text-indigo-600 dark:text-indigo-400 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Fast Shipping</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Get your products delivered within 2-3 business days with our premium shipping service.</p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-indigo-600 dark:text-indigo-400 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">Secure Payments</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Your transactions are protected with 256-bit SSL encryption for maximum security.</p>
+                </div>
+                
+                <div class="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-md transition-all duration-300 hover:shadow-lg">
+                    <div class="w-12 h-12 bg-indigo-100 dark:bg-indigo-900 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-headset text-indigo-600 dark:text-indigo-400 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-lg mb-2">24/7 Support</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Our customer service team is available round the clock to assist you with any queries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-12 md:py-16 bg-white dark:bg-gray-900 transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">What Our Customers Say</h2>
+                <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Don't just take our word for it - hear from our satisfied customers</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">"The Blackmagic URSA Cine 12K is absolutely phenomenal. The image quality is breathtaking and the build is solid. Worth every penny!"</p>
+                    <div class="flex items-center">
+                        <img src="https://media.wired.com/photos/648762356279e36472844580/3:2/w_2560%2Cc_limit/WI070123_FF_ChristopherNolan_01.jpg" alt="John D." class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-semibold">christopher nolan</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Professional Filmmaker</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">"I've been collecting watches for years and the Zenith Chronomaster Sport is one of my favorites. The service was excellent too."</p>
+                    <div class="flex items-center">
+                        <img src="https://www.investopedia.com/thmb/ckPwC5ARwco1nOSCKVGE57se8MI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1245748917-99e3329a7b8147e8ab648806220ce153.jpg" alt="Sarah M." class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-semibold">Lionel Messi</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Watch Collector</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">"The gaming PC is a beast! Handles everything I throw at it with ease. Shipping was faster than expected too."</p>
+                    <div class="flex items-center">
+                        <img src="https://a.espncdn.com/photo/2018/0917/r432464_1600x800cc.jpg" alt="Alex T." class="w-10 h-10 rounded-full mr-3">
+                        <div>
+                            <h4 class="font-semibold">Ninja</h4>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">Gaming Enthusiast</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-12 md:py-16 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Our Shop" class="rounded-xl shadow-lg w-full">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold mb-4">About Our Shop</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">Welcome to Ruchil's Collection your premier destination for high-end technology and luxury gadgets. Established in 2025, we are dedicated to delivering exceptional products that seamlessly blend advanced innovation with superior craftsmanship.
+
+Our team is composed of seasoned technology enthusiasts and industry experts who rigorously evaluate and approve each item we offer. At Ruchil's Collection, we prioritize quality over quantity, curating a distinguished selection that represents the pinnacle of design, performance, and reliability in the tech world.</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6"></p>
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-indigo-600 dark:text-indigo-400 mr-2"></i>
+                            <span>100% Authentic Products</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-indigo-600 dark:text-indigo-400 mr-2"></i>
+                            <span>Free Worldwide Shipping</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-indigo-600 dark:text-indigo-400 mr-2"></i>
+                            <span>30-Day Returns</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-indigo-600 dark:text-indigo-400 mr-2"></i>
+                            <span>24/7 Customer Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-12 md:py-16 bg-indigo-600 text-white">
+        <div class="container mx-auto px-4 sm:px-6 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Stay Updated</h2>
+            <p class="max-w-2xl mx-auto mb-6 text-indigo-100">Subscribe to our newsletter to receive updates on new products, exclusive offers, and tech news.</p>
+            <form class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 rounded-l-lg focus:outline-none text-gray-900">
+                <button type="submit" class="bg-indigo-800 hover:bg-indigo-900 px-6 py-3 rounded-r-lg font-medium transition">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar fixed top-0 right-0 h-full w-full sm:w-96 bg-white dark:bg-gray-800 shadow-lg z-50 overflow-y-auto transition-transform duration-300">
+        <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <h3 class="text-xl font-bold">Your Cart</h3>
+            <button id="close-cart" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        
+        <div id="cart-items" class="p-4">
+            <!-- Cart items will be added here dynamically -->
+            <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+                <i class="fas fa-shopping-cart text-4xl mb-2"></i>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        
+        <div class="p-4 border-t border-gray-200 dark:border-gray-700">
+            <div class="flex justify-between mb-4">
+                <span class="font-semibold">Subtotal:</span>
+                <span id="cart-subtotal" class="font-bold">$0.00</span>
+            </div>
+            <div class="flex justify-between mb-4">
+                <span class="font-semibold">Shipping:</span>
+                <span id="cart-shipping" class="font-bold">$24.00</span>
+            </div>
+            <div class="flex justify-between mb-6 text-lg">
+                <span class="font-semibold">Total:</span>
+                <span id="cart-total" class="font-bold text-blue-600 dark:text-blue-400">$24.00</span>
+            </div>
+            <button id="checkout-btn" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
+    
+    <!-- Cart Overlay -->
+    <div id="cart-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-4 md:mb-0">We use cookies to enhance your experience. By continuing to browse, you agree to our use of cookies.</p>
+            <div class="flex space-x-4">
+                <button id="accept-cookies" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded transition">Accept</button>
+                <button id="decline-cookies" class="px-4 py-2 border border-gray-600 hover:bg-gray-700 rounded transition">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Ruchil's Collection</h3>
+                    <p>Your trusted source for quality tech accessories at affordable prices.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="hover:text-blue-400 transition">Home</a></li>
+                        <li><a href="#products" class="hover:text-blue-400 transition">Products</a></li>
+                        <li><a href="#about" class="hover:text-blue-400 transition">About</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Customer Service</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-blue-400 transition">Shipping Policy</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Returns & Refunds</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">FAQ</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2"></i>
+                            <span>Mumbai, India</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2"></i>
+                            <span>+91 9082350862</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2"></i>
+                            <span>ruchilparkar2406@gmail.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Ruchil's Shop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart JavaScript -->
+    <script>
+        // Simulate loading
+        setTimeout(() => {
+            document.getElementById('loading').style.display = 'none';
+        }, 1000);
+
+         // Theme toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            
+            // Check for saved theme preference or use system preference
+            if (localStorage.getItem('color-theme') === 'dark' || 
+                (!localStorage.getItem('color-thetheme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+            
+            themeToggle.addEventListener('click', () => {
+                // Toggle the theme
+                document.documentElement.classList.toggle('dark');
+                
+                // Update icon
+                if (document.documentElement.classList.contains('dark')) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            });
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        const cartButton = document.getElementById('cart-button');
+        const mobileCartButton = document.getElementById('mobile-cart-button');
+        const closeCartButton = document.getElementById('close-cart');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartOverlay = document.getElementById('cart-overlay');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const cartCount = document.getElementById('cart-count');
+        const mobileCartCount = document.getElementById('mobile-cart-count');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = count;
+            mobileCartCount.textContent = count;
+            
+            // Add bounce animation when count changes
+            cartCount.classList.add('bounce');
+            mobileCartCount.classList.add('bounce');
+            setTimeout(() => {
+                cartCount.classList.remove('bounce');
+                mobileCartCount.classList.remove('bounce');
+            }, 500);
+        }
+        
+        function updateCart() {
+            // Save to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Update cart items display
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+                        <i class="fas fa-shopping-cart text-4xl mb-2"></i>
+                        <p>Your cart is empty</p>
+                    </div>
+                `;
+                checkoutBtn.disabled = true;
+            } else {
+                cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="flex items-center mb-4 pb-4 border-b border-gray-200 dark:border-gray-700" data-id="${item.id}">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded">
+                        <div class="ml-4 flex-1">
+                            <h4 class="font-medium">${item.name}</h4>
+                            <div class="flex items-center justify-between mt-1">
+                                <div class="flex items-center">
+                                    <button class="decrease-quantity px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded" data-id="${item.id}">
+                                        <i class="fas fa-minus text-xs"></i>
+                                    </button>
+                                    <span class="mx-2">${item.quantity}</span>
+                                    <button class="increase-quantity px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded" data-id="${item.id}">
+                                        <i class="fas fa-plus text-xs"></i>
+                                    </button>
+                                </div>
+                                <span class="font-medium">$${(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                        </div>
+                        <button class="remove-item ml-4 text-red-500 hover:text-red-700" data-id="${item.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `).join('');
+                
+                // Add event listeners to new buttons
+                document.querySelectorAll('.decrease-quantity').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = e.target.closest('button').getAttribute('data-id');
+                        decreaseQuantity(id);
+                    });
+                });
+                
+                document.querySelectorAll('.increase-quantity').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = e.target.closest('button').getAttribute('data-id');
+                        increaseQuantity(id);
+                    });
+                });
+                
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const id = e.target.closest('button').getAttribute('data-id');
+                        removeFromCart(id);
+                    });
+                });
+                
+                checkoutBtn.disabled = false;
+            }
+            
+            // Update totals
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const shipping = 5.00;
+            const total = subtotal + shipping;
+            
+            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+        
+        function addToCart(product) {
+            const existingItem = cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+            
+            updateCart();
+            
+            // Show a nice notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg z-50 animate-fade-in-out';
+            notification.innerHTML = `
+                <i class="fas fa-check-circle mr-2"></i>
+                Added to cart: ${product.name}
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+        
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+        }
+        
+        function increaseQuantity(id) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += 1;
+                updateCart();
+            }
+        }
+        
+        function decreaseQuantity(id) {
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                if (item.quantity > 1) {
+                    item.quantity -= 1;
+                } else {
+                    removeFromCart(id);
+                }
+                updateCart();
+            }
+        }
+        
+        // Event listeners for cart buttons
+        cartButton.addEventListener('click', () => {
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        mobileCartButton.addEventListener('click', () => {
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeCartButton.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        
+        cartOverlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        
+        // Add to cart buttons
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const product = {
+                    id: button.getAttribute('data-id'),
+                    name: button.getAttribute('data-name'),
+                    price: parseFloat(button.getAttribute('data-price')),
+                    image: button.getAttribute('data-image')
+                };
+                addToCart(product);
+            });
+        });
+        
+        // Checkout button
+        checkoutBtn.addEventListener('click', () => {
+            alert('Thank you for your order! This is a demo, so no real transaction will occur.');
+            cart = [];
+            updateCart();
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        
+        // Initialize cart
+        updateCart();
+        
+        // Cookie consent
+        const cookieConsent = document.getElementById('cookie-consent');
+        const acceptCookies = document.getElementById('accept-cookies');
+        const declineCookies = document.getElementById('decline-cookies');
+        
+        if (!localStorage.getItem('cookies-accepted')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookies-accepted', 'true');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookies-accepted', 'false');
+            cookieConsent.classList.add('hidden');
+        });
+    </script>
+</body>
+</html> 
