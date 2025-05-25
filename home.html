@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Master Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .theme-transition * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+        .theme-toggle {
+            width: 50px;
+            height: 25px;
+            background-color: #4680f4;
+            border-radius: 9999px;
+            position: relative;
+            cursor: pointer;
+        }
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            width: 21px;
+            height: 21px;
+            border-radius: 50%;
+            background-color: white;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+        .dark .theme-toggle {
+            background-color: #ffffff;
+        }
+        .dark .theme-toggle::after {
+            transform: translateX(25px);
+            background-color: #f3f4f6;
+        }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="theme-transition bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header with Theme Toggle -->
+        <header class="flex justify-between items-center mb-12">
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 gradient-text">Master Page</h1>
+            <div class="flex items-center space-x-4">
+                <span class="hidden sm:inline text-sm font-medium"><i class="fas fa-moon mr-1"></i> Theme</span>
+                <button id="themeToggle" class="theme-toggle">
+                    
+                    <span class="sr-only">Toggle theme</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Profile Section -->
+        <section class="mb-16">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="relative">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 p-1 floating">
+                        <img src="my-imgg.jpg" 
+                             alt="Profile" class="w-full h-full rounded-full object-cover border-2 border-white dark:border-gray-800">
+                    </div>
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-2">Ruchil Parkar</h2>
+                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-4">Web Developer & Graphic Designer</p>
+                    <p class="text-gray-700 dark:text-gray-300 mb-6">
+                        Driven by a passion for crafting visually stunning and highly functional digital experiences. Currently specializing in front-end development and user interface design, with a strong focus on creating intuitive, user-centered solutions
+                        
+                    </p>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <a href="#" class="social-icon text-xl w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon text-xl w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-blue-600 hover:text-white">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-icon text-xl w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-800 hover:text-white">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-icon text-xl w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-pink-600 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Cards -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <!-- Card 1 -->
+            <div class="card-hover bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300">
+                <div class="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-500 dark:text-blue-400 mb-4">
+                    <i class="fas fa-briefcase text-xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Day-1</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Explore my collection of projects and creative works.</p>
+                <a href="#" class="inline-flex items-center text-blue-500 dark:text-blue-400 font-medium hover:text-blue-700 dark:hover:text-blue-300">
+                    View Portfolio <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card-hover bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300">
+                <div class="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center text-purple-500 dark:text-purple-400 mb-4">
+                    <i class="fas fa-file-alt text-xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Day-2</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Download my professional resume and work history.</p>
+                <a href="#" class="inline-flex items-center text-purple-500 dark:text-purple-400 font-medium hover:text-purple-700 dark:hover:text-purple-300">
+                    View Resume <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card-hover bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300">
+                <div class="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900/50 flex items-center justify-center text-green-500 dark:text-green-400 mb-4">
+                    <i class="fas fa-blog text-xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Day-3</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Read my thoughts on design, tech, and creative process.</p>
+                <a href="#" class="inline-flex items-center text-green-500 dark:text-green-400 font-medium hover:text-green-700 dark:hover:text-green-300">
+                    Read Blog <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card-hover bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300">
+                <div class="w-12 h-12 rounded-lg bg-yellow-100 dark:bg-yellow-900/50 flex items-center justify-center text-yellow-500 dark:text-yellow-400 mb-4">
+                    <i class="fas fa-envelope text-xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Day-4</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Get in touch for collaborations or just to say hello.</p>
+                <a href="#" class="inline-flex items-center text-yellow-500 dark:text-yellow-400 font-medium hover:text-yellow-700 dark:hover:text-yellow-300">
+                    Contact Me <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="card-hover bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700 transition-all duration-300">
+                <div class="w-12 h-12 rounded-lg bg-red-100 dark:bg-red-900/50 flex items-center justify-center text-red-500 dark:text-red-400 mb-4">
+                    <i class="fas fa-heart text-xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Day-5</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">Discover my hobbies and personal interests.</p>
+                <a href="#" class="inline-flex items-center text-red-500 dark:text-red-400 font-medium hover:text-red-700 dark:hover:text-red-300">
+                    Explore <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center text-gray-500 dark:text-gray-400 text-sm pt-8 border-t border-gray-200 dark:border-gray-800">
+            <p>© 2025 Ruchil Parkar. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Theme Toggle Handler
+const themeToggle = document.getElementById('themeToggle');
+const htmlElement = document.documentElement;
+
+// Determine the user's preferred theme
+const savedTheme = localStorage.getItem('theme');
+const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+// Apply initial theme
+if (savedTheme === 'dark' || (!savedTheme && prefersDarkMode)) {
+    htmlElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+} else {
+    htmlElement.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
+}
+
+
+// Toggle theme on button click
+themeToggle.addEventListener('click', () => {
+    const isDark = htmlElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+});
+
+
+        // Floating animation for profile image
+        const profileImg = document.querySelector('.floating');
+        if (profileImg) {
+            profileImg.addEventListener('mouseenter', () => {
+                profileImg.style.animationPlayState = 'paused';
+            });
+            profileImg.addEventListener('mouseleave', () => {
+                profileImg.style.animationPlayState = 'running';
+            });
+        }
+    </script>
+</body>
+</html>
